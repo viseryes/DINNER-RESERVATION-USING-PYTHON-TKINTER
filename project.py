@@ -4,10 +4,11 @@ from tkinter import messagebox
 
 def addbtn():
 
-	if contact.get() =='' or name.get()=='' or restime.get()=='' or persons.get() =='' or table.get()=='':
+	if contact.get() =='' or name.get()=='' or restime.get()=='' or persons.get() =='' or table.get()=='' or valchk.get()=='':
 		messagebox.showerror("INVALID ENTRY","ENTER ALL FIELD")
+
 	else:
-		listbox.insert(END,([name.get()],contact.get(),restime.get(),persons.get(),table.get()))
+		listbox.insert(END,(name.get(),"(",contact.get(),")->",valchk.get(),"-",restime.get(),"-(TABLE)",table.get(),"-(PERSONS)",persons.get()))
 		
 
 def delbtn():
@@ -20,11 +21,14 @@ def clrbtn():
 	persons_entry.delete(0,END)
 	restime_entry.delete(0,END)
 	tabno_entry.delete(0,END)
+	chk1.deselect()
+	chk2.deselect()
+	chk3.deselect()
 
 
 root = Tk()
-root.geometry('550x370')
-root.title('DINNER RESERVATIONS')
+root.geometry('540x400')
+root.title('RESTRAUTANT RESERVATIONS')
 root.resizable(False,False)
 root.configure(bg='#373F51')
 
@@ -68,23 +72,30 @@ tabno_entry.grid(row=1, column =3)
 #buttons
 # add button
 add_btn = Button(root, text='ADD ENTRY', command = addbtn,relief=GROOVE, bg='#9AFF1F',fg="#000000")
-add_btn.grid(row = 3, column =0, pady = 10)
+add_btn.grid(row = 4, column =0, pady = 10)
 #delete button
 del_btn = Button(root, text='DELETE ENTRY', command = delbtn,relief=GROOVE, bg='#9AFF1F',fg="#000000")
-del_btn.grid(row = 3, column =1, pady = 10)
+del_btn.grid(row = 4, column =1, pady = 10)
 #clear input button
-clr_btn = Button(root, text='CLEAR ENTRY', command = clrbtn,relief=GROOVE, bg='#9AFF1F',fg="#000000")
-clr_btn.grid(row = 3, column =3, pady = 10)
+clr_btn = Button(root, text='CLEAR INPUT', command = clrbtn,relief=GROOVE, bg='#9AFF1F',fg="#000000")
+clr_btn.grid(row = 4, column =2, pady = 10)
 
-#listbox
+#listbox and scrollbar
 listbox = Listbox(root, width = 70, height = 10)
-listbox.grid(row = 4, columnspan = 4) 
+listbox.grid(row = 5, columnspan = 4) 
 scroll = Scrollbar(root,orient = VERTICAL,bg='black')
-scroll.grid(row=4, column=3,sticky='ns')
+scroll.grid(row=5, column=3,sticky='ns')
 listbox.configure(yscrollcommand= scroll.set)
 scroll.configure(command= listbox.yview)
 
-
+#checkboxes
+valchk = StringVar()
+chk1 = Checkbutton(root, text = "BREAKFAST", variable = valchk , onvalue= "BREAKFAST", offvalue = "")
+chk1.grid(row = 3, column = 0)
+chk2 = Checkbutton(root, text = "LUNCH", variable = valchk , onvalue= "LUNCH", offvalue = "")
+chk2.grid(row = 3, column = 1)
+chk3 = Checkbutton(root, text = "DINNER", variable = valchk , onvalue= "DINNER", offvalue = "")
+chk3.grid(row = 3, column = 2)
 
 
 root.mainloop()
