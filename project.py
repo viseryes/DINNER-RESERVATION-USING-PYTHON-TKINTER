@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
+from tkcalendar import *
+from tkcalendar import DateEntry
 
 
 def addbtn():
@@ -8,7 +10,7 @@ def addbtn():
 		messagebox.showerror("INVALID ENTRY","ENTER ALL FIELD")
 
 	else:
-		listbox.insert(END,(name.get(),"(",contact.get(),")->",valchk.get(),"-",restime.get(),"-(TABLE)",table.get(),"-(PERSONS)",persons.get()))
+		listbox.insert(END,(cal.get(),"|",name.get(),"(",contact.get(),")->",valchk.get(),"-",restime.get(),"-(TABLE)",table.get(),"-(PERSONS)",persons.get()))
 		
 
 def delbtn():
@@ -24,10 +26,11 @@ def clrbtn():
 	chk1.deselect()
 	chk2.deselect()
 	chk3.deselect()
+    
 
 
 root = Tk()
-root.geometry('540x400')
+root.geometry('590x400')
 root.title('RESTRAUTANT RESERVATIONS')
 root.resizable(False,False)
 root.configure(bg='#373F51')
@@ -69,6 +72,10 @@ table = StringVar()
 tabno_entry = Entry(root,width=5, textvariable = table,bd=2)
 tabno_entry.grid(row=1, column =3)
 
+#reservation date
+resdate = Label(root, text = 'RESERVATION DATE',bg='#373F51',font=("Helvetica",10,'bold'),fg="#FFFFFF")
+resdate.grid(row = 2, column = 2, padx = 15)
+
 #buttons
 # add button
 add_btn = Button(root, text='ADD ENTRY', command = addbtn,relief=GROOVE, bg='#9AFF1F',fg="#000000")
@@ -79,14 +86,22 @@ del_btn.grid(row = 4, column =1, pady = 10)
 #clear input button
 clr_btn = Button(root, text='CLEAR INPUT', command = clrbtn,relief=GROOVE, bg='#9AFF1F',fg="#000000")
 clr_btn.grid(row = 4, column =2, pady = 10)
+#quit button
+quit_btn = Button(root, text='QUIT', command = quit,relief=GROOVE, bg='#9AFF1F',fg="#000000")
+quit_btn.grid(row=4, column= 3 , pady = 10)
+
+#dropdown calender
+cal = DateEntry(root, width=12, year=2020, month=7, day=22,bg='#9AFF1F', fg="#000000", borderwidth=2)
+cal.grid(row = 2,column = 3)
 
 #listbox and scrollbar
-listbox = Listbox(root, width = 70, height = 10)
+listbox = Listbox(root, width = 80, height = 10)
 listbox.grid(row = 5, columnspan = 4) 
-scroll = Scrollbar(root,orient = VERTICAL,bg='black')
-scroll.grid(row=5, column=3,sticky='ns')
-listbox.configure(yscrollcommand= scroll.set)
-scroll.configure(command= listbox.yview)
+scroll_y = Scrollbar(root,orient = VERTICAL,bg='black')
+scroll_y.grid(row=5, column=3,sticky='ns')
+listbox.configure(yscrollcommand= scroll_y.set)
+scroll_y.configure(command= listbox.yview)
+
 
 #checkboxes
 valchk = StringVar()
