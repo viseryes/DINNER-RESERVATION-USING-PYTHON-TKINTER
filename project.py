@@ -30,7 +30,7 @@ def clrbtn():
 
 
 root = Tk()
-root.geometry('540x400')
+root.geometry('590x400')
 root.title('RESTAURANT RESERVATIONS')
 root.resizable(False,False)
 root.configure(bg='#373F51')
